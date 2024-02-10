@@ -1,25 +1,20 @@
-# StopWatch App For Chrome
+# StopWatch App For Chrome 
 
 ![StopWatch App for Chrome](/src/assets/images/stopwatch-demo.png)
 
-## Expanding the ESLint configuration
+### Technologiez i Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React.ts
+- TailwindCSS
+- TypeScript
 
-- Configure the top-level `parserOptions` property like this:
+#### How use This Repo
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
 ```
+1. Clone the repo to your local machine using `git clone https://github.com/Mobin-Karam/stopwatch.git`
+2. Navigate to the project directory by running `cd stopwatch` in your terminal
+3. Install all dependencies by running `npm install` or `yarn install`.
+4. Start the development server using `npm run dev` or `yarn run dev`.
+5. Open http://localhost:5173/ on your browser to see the app in
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+```
