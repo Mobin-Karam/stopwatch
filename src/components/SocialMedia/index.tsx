@@ -4,7 +4,7 @@ import Linkedin from "../../assets/images/linkedin.png";
 const SocialMedia = () => {
   return (
     <div className="flex flex-row">
-      <a href="https://linkedin.com/in/mobin-karam-a54114242" target="_blank">
+      <a href="https://linkedin.com/in/mobin-karam" target="_blank">
         <div className="flex items-center justify-center flex-row mr-5">
           <img
             src={Linkedin}

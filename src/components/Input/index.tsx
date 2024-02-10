@@ -1,12 +1,13 @@
 type inputProps = {
-  value: string;
+  value: number;
+  className: string;
 };
 
-function Input({ value }: inputProps) {
+function Input({ value, className }: inputProps) {
   return (
     <input
       type="text"
-      className="w-16 text-5xl text-center mr-1 text-purple-200 bg-purple-900 border-purple-950 border-2 rounded-lg"
+      className={className}
       value={value}
       readOnly
     />

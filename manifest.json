@@ -1,0 +1,20 @@
+{
+  "short_name": "Stop Watch",
+  "name": "Stop Watch",
+  "icons": [
+    {
+      "src": "./src/assets/images/favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "./src/assets/images/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
