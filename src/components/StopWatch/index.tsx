@@ -65,9 +65,7 @@ const StopWatch = memo(() => {
     setHours("00");
   }
 
-  function onClickLab() {
-    console.log("Lab");
-  }
+  function onClickLab() {}
 
   return (
     <div className="flex flex-col">
@@ -91,7 +89,7 @@ const StopWatch = memo(() => {
           {milisec}
         </span>
       </div>
-      <div className="flex items-center justify-between gap-1 w-[400px]">
+      <div className="flex items-center justify-between gap-1 w-[350px]">
         <Button
           disabled={false}
           onClickHandle={
