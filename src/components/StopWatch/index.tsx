@@ -1,25 +1,38 @@
 import { memo, useState } from "react";
 import Button from "../Button";
-import Input from "../Input";
 
 const StopWatch = memo(() => {
   const [milisec, setMilisec] = useState(0);
-  const [second, setSecond] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [hours, setHours] = useState(0);
+  const [second, setSecond] = useState("00");
+  const [minutes, setMinutes] = useState("00");
+  const [hours, setHours] = useState("00");
   const [intervalId, setIntervalId] = useState(0);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [isPause, setIsPause] = useState<boolean>(false);
 
   if (milisec === 10) {
-    setSecond(second + 1);
+    if (Number(second) < 9) {
+      setSecond("0" + (Number(second) + 1));
+    } else {
+      setSecond((Number(second) + 1).toString());
+    }
     setMilisec(0);
   }
-  if (second === 60) {
-    setMinutes(minutes + 1);
-    setSecond(0);
+  if (Number(second) === 60) {
+    if (Number(minutes) < 9) {
+      setMinutes("0" + (Number(minutes) + 1));
+    } else {
+      setMinutes((Number(minutes) + 1).toString());
+    }
+    setSecond("00");
   }
-  if (minutes === 60) {
-    setHours(hours + 1);
-    setMinutes(0);
+  if (Number(minutes) === 60) {
+    if (Number(hours) < 9) {
+      setHours("0" + (Number(hours) + 1));
+    } else {
+      setHours((Number(hours) + 1).toString());
+    }
+    setMinutes("00");
   }
 
   function onClickStart() {
@@ -28,6 +41,8 @@ const StopWatch = memo(() => {
         setMilisec((prev) => prev + 1);
       }, 100);
       setIntervalId(newIntervalId);
+      setIsRunning(true);
+      setIsPause(false);
     }
   }
 
@@ -35,65 +50,71 @@ const StopWatch = memo(() => {
     if (intervalId) {
       clearInterval(intervalId);
       setIntervalId(0);
+      setIsPause(true);
     }
   }
+
   function onClickClear() {
     clearInterval(intervalId);
+    setIsRunning(false);
+    setIsPause(false);
     setIntervalId(0);
     setMilisec(0);
-    setSecond(0);
-    setMinutes(0);
-    setHours(0);
+    setSecond("00");
+    setMinutes("00");
+    setHours("00");
+  }
+
+  function onClickLab() {
+    console.log("Lab");
   }
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row mb-2 justify-center gap-1">
-        <Input
+      <div className="flex flex-row mb-2 items-end justify-center gap-1">
+        <span className="text-white text-6xl font-thin">{hours}:</span>
+        <span className="text-white text-6xl font-thin">{minutes}:</span>
+        <span
           className={
-            "w-16 text-5xl text-center text-purple-200 bg-purple-900 border-purple-950 border-2 rounded-lg"
+            isRunning
+              ? `text-blue-400 text-6xl font-thin`
+              : `text-white text-6xl font-thin`
           }
-          value={hours}
-        />
-        <Input
+        >
+          {second}.
+        </span>
+        <span
           className={
-            "w-16 text-5xl text-center text-purple-200 bg-purple-900 border-purple-950 border-2 rounded-lg"
+            isRunning ? `text-blue-400 text-5xl` : `text-white text-5xl`
           }
-          value={minutes}
-        />
-        <Input
-          className={
-            "w-16 text-5xl text-center text-purple-200 bg-purple-900 border-purple-950 border-2 rounded-lg"
-          }
-          value={second}
-        />
-        <Input
-          className={
-            "w-10 text-2xl text-center text-purple-200 bg-purple-900 border-purple-950 border-2 rounded-lg"
-          }
-          value={milisec}
-        />
+        >
+          {milisec}
+        </span>
       </div>
-      <div className="flex items-center justify-center gap-1 w-full">
+      <div className="flex items-center justify-between gap-1 w-[400px]">
         <Button
           disabled={false}
-          onClickHandle={onClickStart}
-          buttonName={"Start"}
+          onClickHandle={
+            !isRunning ? onClickStart : !isPause ? onClickStop : onClickStart
+          }
+          buttonName={!isRunning ? "Start" : !isPause ? "Pause" : "Resume"}
           className={
-            "bg-green-800 text-white py-1 px-4 rounded-lg hover:bg-green-700 transition-all duration-[200] "
+            isRunning
+              ? "bg-slate-500 text-lg text-white py-1 w-[140px] rounded-3xl hover:bg-slate-600 transition-all duration-[200] "
+              : "bg-blue-500 text-lg text-white py-1 w-[140px] rounded-3xl hover:bg-blue-600 transition-all duration-[200] "
           }
         />
         <Button
-          disabled={false}
-          onClickHandle={onClickClear}
-          buttonName={"Clear"}
-          className={`bg-blue-800 text-white py-1 px-4 rounded-lg hover:bg-blue-700 transition-all duration-[200]`}
-        />
-        <Button
-          disabled={false}
-          onClickHandle={onClickStop}
-          buttonName={"Stop"}
-          className={`bg-red-800 text-white py-1 px-4 rounded-lg hover:bg-red-700 transition-all duration-[200]`}
+          disabled={isRunning ? false : true}
+          onClickHandle={isPause ? onClickClear : onClickLab}
+          buttonName={isPause ? "Clear" : "Lab"}
+          className={
+            isPause
+              ? `bg-red-500 text-lg text-white py-1 w-[140px] rounded-3xl hover:bg-red-600 transition-all duration-[200]`
+              : isRunning
+              ? `bg-slate-500 text-lg text-white py-1 w-[140px] rounded-3xl opacity-100 transition-all duration-[200]`
+              : `bg-slate-500 text-lg text-white py-1 w-[140px] rounded-3xl opacity-40 transition-all duration-[200]`
+          }
         />
       </div>
     </div>
