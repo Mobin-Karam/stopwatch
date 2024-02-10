@@ -69,21 +69,54 @@ const StopWatch = memo(() => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row mb-2 items-end justify-center gap-1">
-        <span className="text-white text-6xl font-thin">{hours}:</span>
-        <span className="text-white text-6xl font-thin">{minutes}:</span>
+      <div className="flex flex-row mb-2 items-end justify-center gap-2 w-[350px]">
         <span
           className={
-            isRunning
-              ? `text-blue-400 text-6xl font-thin`
-              : `text-white text-6xl font-thin`
+            !isRunning
+              ? `text-white text-6xl font-thin`
+              : isPause
+              ? `text-white text-6xl font-thin`
+              : Number(hours) === 0
+              ? `text-white text-6xl font-thin`
+              : `text-blue-400 text-6xl font-thin`
           }
         >
-          {second}.
+          {hours}
         </span>
+        <span className="text-6xl text-white font-thin">:</span>
         <span
           className={
-            isRunning ? `text-blue-400 text-5xl` : `text-white text-5xl`
+            !isRunning
+              ? `text-white text-6xl font-thin`
+              : isPause
+              ? `text-white text-6xl font-thin`
+              : Number(minutes) === 0
+              ? `text-white text-6xl font-thin`
+              : `text-blue-400 text-6xl font-thin`
+          }
+        >
+          {minutes}
+        </span>
+        <span className="text-6xl text-white font-thin">:</span>
+        <span
+          className={
+            !isRunning
+              ? `text-white text-6xl font-thin`
+              : isPause
+              ? `text-white text-6xl font-thin`
+              : `text-blue-400 text-6xl font-thin`
+          }
+        >
+          {second}
+        </span>
+        <span className="text-6xl text-white font-thin">.</span>
+        <span
+          className={
+            !isRunning
+              ? `text-white text-5xl`
+              : isPause
+              ? `text-white text-5xl`
+              : `text-blue-400 text-5xl`
           }
         >
           {milisec}

@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
-import Footer from "../Footer";
-import Header from "../Header";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
 
 interface LayoutProps extends PropsWithChildren<object> {
   // Other props specific to your component
