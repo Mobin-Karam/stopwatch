@@ -1,6 +1,6 @@
 # StopWatch App For Chrome
 
-- [StopWatch App for Chrome](/src/assets/images/stopwatch-demo.png)
+- ![StopWatch App for Chrome](/src/assets/images/stopwatch-demo.png)
 
 ## Expanding the ESLint configuration
 
