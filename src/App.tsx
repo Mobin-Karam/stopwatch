@@ -1,14 +1,13 @@
 import Layout from "./components/Layout";
+import StopWatch from "./components/StopWatch";
 
 function App() {
   return (
-    <div>
+    <>
       <Layout>
-        <h1 className="text-5xl font-bold text-center font-sans">
-          Welcome to our website!
-        </h1>
+        <StopWatch />
       </Layout>
-    </div>
+    </>
   );
 }
 

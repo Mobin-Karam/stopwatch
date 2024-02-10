@@ -8,10 +8,10 @@ interface LayoutProps extends PropsWithChildren<object> {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <>
+    <div className="bg-slate-600 w-full h-dvh flex items-center justify-center">
       <Header />
       {children}
       <Footer />
-    </>
+    </div>
   );
 }
