@@ -4,6 +4,7 @@
 
 ### Technologiez i Used
 
+- Vite
 - React.ts
 - TailwindCSS
 - TypeScript
