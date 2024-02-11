@@ -1,11 +1,11 @@
-const Lab = () => {
-  return (
-    <>
-      <div className="">
-        <div className=""></div>
-      </div>
-    </>
-  );
-};
+const Lab = (): JSX.Element => {
+	return (
+		<>
+			<div className="">
+				<div className=""></div>
+			</div>
+		</>
+	)
+}
 
-export default Lab;
+export default Lab
