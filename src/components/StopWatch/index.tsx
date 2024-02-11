@@ -15,7 +15,7 @@ const StopWatch = memo((): JSX.Element => {
 	const [intervalId, setIntervalId] = useState(0)
 	const [isRunning, setIsRunning] = useState<boolean>(false)
 	const [isPause, setIsPause] = useState<boolean>(false)
-	const [isLab, setIsLab] = useState<boolean>(false)
+	// const [isLab, setIsLab] = useState<boolean>(false)
 
 	if (milisec === 10) {
 		if (Number(second) < 9) {
