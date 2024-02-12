@@ -8,6 +8,8 @@
 - React.ts
 - TailwindCSS
 - TypeScript
+- Eslint
+- Prettier
 
 #### How use This Repo
 
