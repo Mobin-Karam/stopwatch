@@ -36,7 +36,7 @@ jobs:
         run: npm run lint --if-present
 
       - name: Test
-        run: npm test -- --runInBand --watch=false --if-present
+        run: npm run test --if-present -- --runInBand --watch=false
 
       - name: Build
         run: npm run build
