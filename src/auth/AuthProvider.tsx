@@ -1,13 +1,6 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { StopwatchSnapshot, User } from "./types";
+import { withCredentialsFetch } from "../utils/http";
 
 type AuthContextValue = {
   user: User | null;
@@ -23,18 +16,6 @@ type AuthContextValue = {
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
-
-const withCredentialsFetch = async (input: RequestInfo, init?: RequestInit) => {
-  const res = await fetch(input, {
-    credentials: "include",
-    headers: { "Content-Type": "application/json", ...(init?.headers ?? {}) },
-    ...init,
-  });
-  if (!res.ok) {
-    throw new Error(`Request failed: ${res.status}`);
-  }
-  return res;
-};
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { FALLBACK_MESSAGES, fetchTranslations } from "./server";
+import { fetchTranslations } from "./server";
+import { useTranslationBuilder } from "./useTranslation";
 import type { Lang, Messages } from "./types";
 
 type Vars = Record<string, string | number>;
@@ -15,11 +16,6 @@ type I18nContextValue = {
 };
 
 const I18nContext = createContext<I18nContextValue | null>(null);
-
-const interpolate = (value: string, vars?: Vars) => {
-  if (!vars) return value;
-  return value.replace(/\{(\w+)\}/g, (_, token) => String(vars[token] ?? ""));
-};
 
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLang] = useState<Lang | null>(() => {
@@ -61,10 +57,7 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
     document.documentElement.lang = lang ?? "en";
   }, [lang]);
 
-  const t = (key: string, vars?: Vars) => {
-    const value = messages?.[key] ?? FALLBACK_MESSAGES[key] ?? key;
-    return interpolate(value, vars);
-  };
+  const t = useTranslationBuilder(messages);
 
   const setLanguage = async (next: Lang) => {
     setLang(next);
@@ -80,7 +73,7 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
       ready: ready && Boolean(messages),
       hasSelection,
     }),
-    [lang, loading, ready, hasSelection, messages],
+    [lang, loading, ready, hasSelection, t, messages],
   );
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
