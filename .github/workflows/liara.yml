@@ -54,4 +54,4 @@ jobs:
         env:
           LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
         run: |
-          liara deploy --app="divtime" --api-token="$LIARA_TOKEN" --no-app-logs --platform=static --dist=dist --build-location=iran
+          liara deploy --app="divtime" --api-token="$LIARA_TOKEN" --platform=node --build-location=iran
