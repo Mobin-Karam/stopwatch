@@ -24,10 +24,6 @@ export const metadata: Metadata = {
     "بهره‌وری",
     "فارسی",
   ],
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f5f7fb" },
-    { media: "(prefers-color-scheme: dark)", color: "#050812" },
-  ],
   alternates: {
     canonical: "https://divtime.ir",
   },
@@ -68,6 +64,10 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f7fb" },
+    { media: "(prefers-color-scheme: dark)", color: "#050812" },
+  ],
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

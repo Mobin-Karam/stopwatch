@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useSubscription } from "../../hooks/useSubscription";
 import type { Plan } from "../../subscriptions/plans";
 
@@ -70,25 +69,13 @@ const PlansGrid = ({ onNeedLogin, isAuthenticated }: PlansGridProps) => {
         })}
       </div>
 
-      <div className="flex justify-center">
-        <a
-          referrerPolicy="origin"
-          target="_blank"
-          rel="noreferrer"
-          href="https://trustseal.enamad.ir/?id=707242&Code=EHBQU8BMbloXnxweqJxwbHPnH1yLJ33i"
-        >
-          <Image
-            referrerPolicy="origin"
-            src="https://trustseal.enamad.ir/logo.aspx?id=707242&Code=EHBQU8BMbloXnxweqJxwbHPnH1yLJ33i"
-            alt="Enamad Trust Seal"
-            width={120}
-            height={50}
-            sizes="(min-width: 1024px) 140px, 120px"
-            className="h-auto w-28 cursor-pointer sm:w-32"
-            data-code="EHBQU8BMbloXnxweqJxwbHPnH1yLJ33i"
-          />
-        </a>
-      </div>
+      <div
+        className="flex justify-center"
+        dangerouslySetInnerHTML={{
+          __html:
+            "<a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=707242&Code=EHBQU8BMbloXnxweqJxwbHPnH1yLJ33i'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=707242&Code=EHBQU8BMbloXnxweqJxwbHPnH1yLJ33i' alt='' style='cursor:pointer' code='EHBQU8BMbloXnxweqJxwbHPnH1yLJ33i'></a>",
+        }}
+      />
     </div>
   );
 };

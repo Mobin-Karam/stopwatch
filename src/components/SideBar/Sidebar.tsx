@@ -9,7 +9,6 @@ type SidebarProps = {
   user: User | null;
   onOpenAccount: () => void;
   hrefForPage: (key: PageKey) => string;
-  className?: string;
 };
 
 const getInitials = (name?: string) => {
@@ -19,12 +18,12 @@ const getInitials = (name?: string) => {
   return (parts[0][0] + parts[1][0]).toUpperCase();
 };
 
-const Sidebar = ({ items, activePage, user, onOpenAccount, hrefForPage, className }: SidebarProps) => {
+const Sidebar = ({ items, activePage, user, onOpenAccount, hrefForPage }: SidebarProps) => {
   const { t } = useI18n();
 
   return (
     <aside
-      className={`hidden w-full flex-shrink-0 flex-col justify-between gap-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 text-slate-200 md:flex md:w-64 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:w-72 lg:overflow-y-auto tv:w-80 ${className ?? ""}`}
+      className="hidden w-full flex-shrink-0 flex-col justify-between gap-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 text-slate-200 md:flex md:w-64 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:w-72 lg:overflow-y-auto tv:w-80"
     >
       <div className="space-y-5">
         <div className="rounded-xl border border-[var(--border)] bg-transparent p-4">

@@ -1,4 +1,4 @@
-const CACHE = "divtime-cache-v1";
+const CACHE = "divtime-cache-v2";
 const ASSETS = [
   "/",
   "/manifest.webmanifest",
@@ -26,6 +26,11 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   const url = new URL(event.request.url);
+
+  // Never cache API responses; they are stateful (auth, payments).
+  if (url.origin === self.location.origin && url.pathname.startsWith("/api/")) {
+    return;
+  }
 
   if (url.origin === self.location.origin) {
     event.respondWith(

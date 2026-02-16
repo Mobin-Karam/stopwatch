@@ -104,12 +104,10 @@ export default function Layout({
   children,
 }: LayoutProps) {
   const [donationOpen, setDonationOpen] = useState(false);
-  const sidebarOrder = dir === "rtl" ? "lg:order-2" : "lg:order-1";
-  const contentOrder = dir === "rtl" ? "lg:order-1" : "lg:order-2";
   return (
     <div className="min-h-screen bg-[var(--bg)] text-slate-100" dir={dir}>
       <div
-        className="flex min-h-screen max-w-6xl flex-col gap-4 px-3 py-4 sm:px-4 sm:py-6 lg:max-w-6xl lg:flex-row lg:gap-5 lg:px-6 xl:max-w-7xl 2xl:max-w-8xl tv:max-w-[110rem]"
+        className="flex min-h-screen max-w-6xl flex-col gap-4 px-0 py-0 sm:px-2 sm:py-4 lg:max-w-6xl lg:flex-row lg:gap-4 lg:px-4 xl:max-w-7xl 2xl:max-w-8xl tv:max-w-[110rem]"
       >
         <Sidebar
           items={navItems}
@@ -117,11 +115,10 @@ export default function Layout({
           user={user}
           onOpenAccount={onOpenAccount}
           hrefForPage={pathForPage}
-          className={sidebarOrder}
         />
 
         <div
-          className={`flex flex-1 flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[0_20px_80px_rgba(0,0,0,0.25)] tv:rounded-[26px] ${contentOrder}`}
+          className="flex flex-1 min-w-0 flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[0_20px_80px_rgba(0,0,0,0.25)] tv:rounded-[26px]"
         >
           <Header
             currentTime={currentTime}
