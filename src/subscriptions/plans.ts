@@ -1,5 +1,5 @@
 export type Plan = {
-  id: "basic" | "pro" | "team";
+  id: "free" | "pro";
   name: string;
   amount: number; // IRT
   intervalDays: number;
@@ -7,7 +7,23 @@ export type Plan = {
 };
 
 export const plans: Plan[] = [
-  { id: "basic", name: "Basic", amount: 0, intervalDays: 0, features: ["Stopwatch"] },
-  { id: "pro", name: "Pro", amount: 50000, intervalDays: 30, features: ["Timer", "Pomodoro", "Stopwatch"] },
-  { id: "team", name: "Team", amount: 120000, intervalDays: 30, features: ["All features", "Shared settings"] },
+  {
+    id: "free",
+    name: "Free",
+    amount: 0,
+    intervalDays: 0,
+    features: ["Stopwatch", "Local laps", "Theme toggle"],
+  },
+  {
+    id: "pro",
+    name: "Pro",
+    amount: 49000,
+    intervalDays: 30,
+    features: [
+      "All timers (Stopwatch, Timer, Pomodoro, World Time)",
+      "Cloud sync & backups",
+      "Unlimited laps",
+      "Early feature access",
+    ],
+  },
 ];

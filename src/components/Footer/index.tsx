@@ -5,8 +5,8 @@ const Footer = () => {
   const { t } = useI18n();
 
   return (
-    <footer className="flex w-full items-center justify-between border-t border-slate-800 px-6 py-4 text-sm text-slate-400">
-      <span className="tracking-wide text-slate-500">{t("footer.tagline")}</span>
+    <footer className="flex w-full flex-col items-center gap-3 border-t border-slate-800 px-4 py-4 text-sm text-slate-400 sm:flex-row sm:justify-between sm:px-6">
+      <span className="text-center tracking-wide text-slate-500 sm:text-left">{t("footer.tagline")}</span>
       <SocialMedia />
     </footer>
   );

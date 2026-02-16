@@ -21,7 +21,7 @@ const Sidebar = ({ items, activePage, onSelectPage, user, onOpenAccount }: Sideb
   const { t } = useI18n();
 
   return (
-    <aside className="hidden w-64 flex-shrink-0 flex-col justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 text-slate-200 md:flex">
+    <aside className="hidden w-full flex-shrink-0 flex-col justify-between gap-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 text-slate-200 md:flex md:w-64 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:w-72 lg:overflow-y-auto tv:w-80">
       <div className="space-y-5">
         <div className="rounded-xl border border-[var(--border)] bg-transparent p-4">
           <p className="text-xs uppercase tracking-[0.25em] text-emerald-200/80">

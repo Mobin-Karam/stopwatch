@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useSubscription } from "../../hooks/useSubscription";
 import type { Plan } from "../../subscriptions/plans";
 
@@ -24,7 +25,7 @@ const PlansGrid = ({ onNeedLogin, isAuthenticated }: PlansGridProps) => {
 
   return (
     <div className="space-y-4">
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 tv:grid-cols-4">
         {plans.map((plan) => {
           const isActive = active?.planId === plan.id && active?.status === "active";
           return (
@@ -44,9 +45,11 @@ const PlansGrid = ({ onNeedLogin, isAuthenticated }: PlansGridProps) => {
                   </span>
                 )}
               </div>
-              <p className="text-2xl font-bold text-slate-100">{formatPrice(plan.amount)}</p>
-              <p className="text-xs text-slate-400">Billed every {plan.intervalDays || 0} days</p>
-              <div className="space-y-2 text-sm text-slate-200">
+              <p className="text-2xl font-bold text-slate-100 tv:text-3xl">{formatPrice(plan.amount)}</p>
+              <p className="text-xs text-slate-400 sm:text-sm">
+                {plan.amount === 0 ? "Free forever" : `Billed every ${plan.intervalDays || 30} days`}
+              </p>
+              <div className="space-y-2 text-sm text-slate-200 tv:text-base">
                 {plan.features.map((f) => (
                   <div key={f} className="flex items-center gap-2">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -72,13 +75,16 @@ const PlansGrid = ({ onNeedLogin, isAuthenticated }: PlansGridProps) => {
           referrerPolicy="origin"
           target="_blank"
           rel="noreferrer"
-          href="https://trustseal.enamad.ir/?id=5682010&Code=EHBQU8BMbloXnxweqJxwbHPnH1yLJ33i"
+          href="https://trustseal.enamad.ir/?id=707242&Code=EHBQU8BMbloXnxweqJxwbHPnH1yLJ33i"
         >
-          <img
+          <Image
             referrerPolicy="origin"
-            src="https://trustseal.enamad.ir/logo.aspx?id=5682010&Code=EHBQU8BMbloXnxweqJxwbHPnH1yLJ33i"
+            src="https://trustseal.enamad.ir/logo.aspx?id=707242&Code=EHBQU8BMbloXnxweqJxwbHPnH1yLJ33i"
             alt="Enamad Trust Seal"
-            style={{ cursor: "pointer" }}
+            width={120}
+            height={50}
+            sizes="(min-width: 1024px) 140px, 120px"
+            className="h-auto w-28 cursor-pointer sm:w-32"
             data-code="EHBQU8BMbloXnxweqJxwbHPnH1yLJ33i"
           />
         </a>

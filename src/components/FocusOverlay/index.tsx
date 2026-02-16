@@ -10,16 +10,16 @@ const FocusOverlay = ({ open, onClose }: FocusOverlayProps) => {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-6">
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto px-4 py-6 sm:items-center sm:px-6">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} aria-hidden />
 
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8">
+      <div className="relative w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-8 tv:p-10">
         <div className="relative space-y-4 text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-indigo-200/80">
             {t("header.focus")}
           </p>
-          <h2 className="text-2xl font-semibold text-slate-50">{t("focus.title")}</h2>
-          <p className="text-slate-300">{t("focus.body")}</p>
+          <h2 className="text-xl font-semibold text-slate-50 sm:text-2xl">{t("focus.title")}</h2>
+          <p className="text-sm text-slate-300 sm:text-base">{t("focus.body")}</p>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
             <button

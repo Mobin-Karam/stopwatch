@@ -58,16 +58,16 @@ const StopWatch = () => {
   };
 
   return (
-    <div className="relative w-full max-w-2xl space-y-6">
-      <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6">
-        <div className="flex items-center justify-between text-sm text-slate-400">
+    <div className="relative w-full max-w-2xl space-y-6 px-2 sm:px-0 tv:max-w-3xl">
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 sm:p-6 tv:p-8">
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 sm:text-sm">
           <span>{t("stopwatch.session")}</span>
           <span className="rounded-full border border-amber-500/40 bg-transparent px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-100">
             {t("stopwatch.live")}
           </span>
         </div>
 
-        <div className="mt-4 flex items-end justify-center gap-3 font-mono text-6xl sm:text-7xl">
+        <div className="mt-4 flex items-end justify-center gap-2 font-mono text-5xl sm:text-6xl lg:text-7xl tv:gap-4 tv:text-8xl">
           <span className={isRunning ? "text-blue-200" : "text-slate-100"}>
             {time.hours}
           </span>
@@ -85,13 +85,15 @@ const StopWatch = () => {
           </span>
         </div>
 
-        <p className="mt-3 text-center text-sm text-slate-400">{t("stopwatch.description")}</p>
+        <p className="mt-3 text-center text-xs text-slate-400 sm:text-sm tv:text-base">
+          {t("stopwatch.description")}
+        </p>
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Button
             onClickHandle={isRunning ? pause : start}
             buttonName={primaryButtonLabel}
-            className={`flex-1 rounded-2xl border px-5 py-3 text-lg font-semibold transition-all duration-200 ${
+            className={`flex-1 rounded-2xl border px-5 py-3 text-base font-semibold transition-all duration-200 sm:text-lg tv:px-6 tv:py-4 tv:text-xl ${
               isRunning
                 ? "border-amber-500/60 bg-transparent text-amber-100 hover:border-amber-400"
                 : "border-blue-500/60 bg-transparent text-blue-100 hover:border-blue-400"
@@ -102,7 +104,7 @@ const StopWatch = () => {
             onClickHandle={isPaused ? handleReset : handleLap}
             buttonName={secondaryButtonLabel}
             disabled={!isRunning && !isPaused}
-            className={`flex-1 rounded-2xl border px-5 py-3 text-lg font-semibold transition-all duration-200 ${
+            className={`flex-1 rounded-2xl border px-5 py-3 text-base font-semibold transition-all duration-200 sm:text-lg tv:px-6 tv:py-4 tv:text-xl ${
               isPaused
                 ? "border-rose-500/50 bg-transparent text-rose-100 hover:border-rose-400"
                 : isRunning
@@ -113,8 +115,8 @@ const StopWatch = () => {
         </div>
       </div>
 
-      <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
-        <div className="flex items-center justify-between text-sm text-slate-300">
+      <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 sm:p-5 tv:p-6">
+        <div className="flex items-center justify-between text-xs text-slate-300 sm:text-sm">
           <span>{t("stopwatch.laps")}</span>
           <span className="text-xs text-slate-500">{t("stopwatch.saved", { count: laps.length })}</span>
         </div>
@@ -124,7 +126,7 @@ const StopWatch = () => {
             {t("stopwatch.noLaps")}
           </div>
         ) : (
-          <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+          <div className="space-y-2 max-h-60 overflow-y-auto pr-1 sm:max-h-64 tv:max-h-80">
             {laps.map((lap, index) => (
               <Lab
                 key={lap + index}

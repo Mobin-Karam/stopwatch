@@ -9,6 +9,10 @@ export default {
 
   theme: {
     extend: {
+      screens: {
+        xs: "480px",
+        tv: "1920px",
+      },
       colors: {
         background: "#F8FAFC",
         surface: "#FFFFFF",

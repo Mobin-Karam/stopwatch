@@ -76,3 +76,18 @@ a {
 [data-theme="light"] .text-slate-50 {
   color: #0b1624 !important;
 }
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 1920px) {
+  body {
+    font-size: 18px;
+  }
+}

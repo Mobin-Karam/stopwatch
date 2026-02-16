@@ -8,6 +8,14 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_API_BASE: API_BASE,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "trustseal.enamad.ir",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
