@@ -1,8 +1,10 @@
 {
   "app": "divtime",
-  "port": 3000,
+  "platform": "static",
+  "static": {
+    "public_dir": "dist"
+  },
   "build": {
     "location": "iran"
-  },
-  "disks": []
+  }
 }
