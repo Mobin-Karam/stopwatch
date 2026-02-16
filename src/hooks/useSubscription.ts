@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { plans, type Plan } from "../subscriptions/plans";
+import { plans as fallbackPlans, type Plan } from "../subscriptions/plans";
 
 type Subscription = {
   planId: string;
@@ -20,6 +20,7 @@ type UseSubscriptionReturn = {
 export const useSubscription = (): UseSubscriptionReturn => {
   const [active, setActive] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(false);
+  const [availablePlans, setAvailablePlans] = useState<Plan[]>(fallbackPlans);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -27,6 +28,13 @@ export const useSubscription = (): UseSubscriptionReturn => {
       const res = await fetch("/api/subscriptions/plans", { credentials: "include" });
       const data = await res.json();
       setActive(data.active ?? null);
+      if (Array.isArray(data.plans)) {
+        setAvailablePlans(data.plans);
+      } else {
+        setAvailablePlans(fallbackPlans);
+      }
+    } catch {
+      setAvailablePlans(fallbackPlans);
     } finally {
       setLoading(false);
     }
@@ -56,5 +64,5 @@ export const useSubscription = (): UseSubscriptionReturn => {
     }
   }, [load]);
 
-  return { plans, active, loading, start, refresh: load };
+  return { plans: availablePlans, active, loading, start, refresh: load };
 };

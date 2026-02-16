@@ -146,9 +146,10 @@ const BUNDLES: Record<Lang, Messages> = {
 const postSelection = async (lang: Lang) => {
   if (typeof fetch !== "function") return;
   try {
-    await fetch("/api/locale", {
+    await fetch("/api/user/locale", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ lang }),
       keepalive: true,
     });

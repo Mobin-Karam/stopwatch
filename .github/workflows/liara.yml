@@ -1,0 +1,33 @@
+name: CD-Liara
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: Liara
+      url: https://mobinkaram.liara.run
+    concurrency:
+      group: liara-deploy
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Install Liara CLI
+        run: npm i -g @liara/cli@7
+      - name: Deploy
+        env:
+          LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
+        run: |
+          liara deploy --app="divtime" --api-token="$LIARA_TOKEN" --no-app-logs --port=3000 --platform=node --build-location=iran

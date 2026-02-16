@@ -20,15 +20,20 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [theme, setThemeState] = useState<"dark" | "light">(() => {
-    if (typeof window === "undefined") return "dark";
-    return (localStorage.getItem("theme") as "dark" | "light") ?? "dark";
-  });
+  const [theme, setThemeState] = useState<"dark" | "light">("dark");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = localStorage.getItem("theme");
+    if (stored === "dark" || stored === "light") {
+      setThemeState(stored);
+    }
+  }, []);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await withCredentialsFetch("/api/me");
+        const res = await withCredentialsFetch("/api/user/me");
         const data = await res.json();
         setUser(data.user ?? null);
       } catch {
@@ -47,21 +52,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [user, theme]);
 
   const loginGoogle = useCallback(() => {
-    window.location.href = "/auth/google";
+    window.location.href = "/api/auth/google";
   }, []);
 
   const loginGithub = useCallback(() => {
-    window.location.href = "/auth/github";
+    window.location.href = "/api/auth/github";
   }, []);
 
   const logout = useCallback(async () => {
-    await withCredentialsFetch("/auth/logout", { method: "POST" });
+    await withCredentialsFetch("/api/auth/logout", { method: "GET" });
     setUser(null);
   }, []);
 
   const updateProfile = useCallback(
     async (payload: Partial<Pick<User, "name" | "theme">>) => {
-      const res = await withCredentialsFetch("/api/preferences", {
+      const res = await withCredentialsFetch("/api/user/preferences", {
         method: "POST",
         body: JSON.stringify(payload),
       });
@@ -86,7 +91,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const saveStopwatch = useCallback(async (snapshot: StopwatchSnapshot) => {
     if (!user) return;
-    await withCredentialsFetch("/api/stopwatch", {
+    await withCredentialsFetch("/api/user/stopwatch", {
       method: "POST",
       body: JSON.stringify(snapshot),
     });
@@ -94,7 +99,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const loadStopwatch = useCallback(async () => {
     if (!user) return null;
-    const res = await withCredentialsFetch("/api/stopwatch");
+    const res = await withCredentialsFetch("/api/user/stopwatch");
     const data = await res.json();
     return data.lastStopwatch ?? null;
   }, [user]);

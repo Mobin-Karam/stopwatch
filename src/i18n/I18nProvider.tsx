@@ -18,14 +18,21 @@ type I18nContextValue = {
 const I18nContext = createContext<I18nContextValue | null>(null);
 
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
-  const [lang, setLang] = useState<Lang | null>(() => {
-    const stored = typeof window !== "undefined" ? localStorage.getItem("lang") : null;
-    return (stored as Lang | null) ?? null;
-  });
+  const [lang, setLang] = useState<Lang | null>(null);
   const [messages, setMessages] = useState<Messages | null>(null);
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
-  const [hasSelection, setHasSelection] = useState<boolean>(Boolean(lang));
+  const [hasSelection, setHasSelection] = useState<boolean>(false);
+
+  // Hydrate language preference on client to keep SSR/CSR markup aligned.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = localStorage.getItem("lang") as Lang | null;
+    if (stored) {
+      setLang(stored);
+      setHasSelection(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (!lang) return;

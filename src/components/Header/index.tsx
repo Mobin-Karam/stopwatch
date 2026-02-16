@@ -55,7 +55,9 @@ const Header = ({
           <span className="rounded-full bg-slate-700 px-2 py-0.5 text-[11px] uppercase tracking-wide text-slate-200">
             {timeMode}h
           </span>
-          <span className="font-mono">{currentTime}</span>
+          <span className="font-mono" suppressHydrationWarning>
+            {currentTime}
+          </span>
         </button>
 
         <button

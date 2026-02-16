@@ -1,3 +1,5 @@
+import type { StopwatchSnapshot } from "@time/core";
+
 export type User = {
   id: string;
   name: string;
@@ -7,8 +9,4 @@ export type User = {
   theme?: "dark" | "light";
 };
 
-export type StopwatchSnapshot = {
-  elapsedMs: number;
-  laps: number[];
-  updatedAt?: string;
-};
+export type { StopwatchSnapshot };

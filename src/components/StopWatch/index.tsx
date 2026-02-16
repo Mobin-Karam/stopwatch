@@ -1,103 +1,27 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo } from "react";
+import { useStopwatch, formatDisplay, formatTimeParts } from "@time/core";
 import Button from "../Button";
 import Lab from "../Lab";
 import { useI18n } from "../../i18n/I18nProvider";
 import { useAuth } from "../../auth/AuthProvider";
 
-type TimeParts = {
-  hours: string;
-  minutes: string;
-  seconds: string;
-  centiseconds: string;
-};
-
-const formatTime = (ms: number): TimeParts => {
-  const totalSeconds = Math.floor(ms / 1000);
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-  const centiseconds = Math.floor((ms % 1000) / 10);
-
-  return {
-    hours: hours.toString().padStart(2, "0"),
-    minutes: minutes.toString().padStart(2, "0"),
-    seconds: seconds.toString().padStart(2, "0"),
-    centiseconds: centiseconds.toString().padStart(2, "0"),
-  };
-};
-
-const formatDisplay = (ms: number) => {
-  const t = formatTime(ms);
-  return `${t.hours}:${t.minutes}:${t.seconds}.${t.centiseconds}`;
-};
-
 const StopWatch = () => {
-  const [elapsedMs, setElapsedMs] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const [laps, setLaps] = useState<number[]>([]);
+  const {
+    elapsedMs,
+    laps,
+    isRunning,
+    isPaused,
+    start,
+    pause,
+    reset,
+    lap,
+    setSnapshot,
+    snapshot,
+  } = useStopwatch({ tickMs: 10 });
   const { t } = useI18n();
   const { user, saveStopwatch, loadStopwatch } = useAuth();
 
-  const timerRef = useRef<number | null>(null);
-  const startRef = useRef<number>(0);
-
-  useEffect(() => {
-    if (!isRunning) {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-      return;
-    }
-
-    timerRef.current = window.setInterval(() => {
-      const now = performance.now();
-      setElapsedMs(Math.max(0, Math.round(now - startRef.current)));
-    }, 10);
-
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, [isRunning]);
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, []);
-
-  const start = () => {
-    if (isRunning) return;
-    startRef.current = performance.now() - elapsedMs;
-    setIsRunning(true);
-  };
-
-  const pause = () => {
-    if (!isRunning) return;
-    setIsRunning(false);
-  };
-
-  const reset = () => {
-    setIsRunning(false);
-    setElapsedMs(0);
-    setLaps([]);
-    if (user) saveStopwatch({ elapsedMs: 0, laps: [] });
-  };
-
-  const addLap = () => {
-    if (!isRunning) return;
-    const newLaps = [elapsedMs, ...laps];
-    setLaps(newLaps);
-    if (user) saveStopwatch({ elapsedMs, laps: newLaps });
-  };
-
-  const time = useMemo(() => formatTime(elapsedMs), [elapsedMs]);
-  const isPaused = !isRunning && elapsedMs > 0;
+  const time = useMemo(() => formatTimeParts(elapsedMs), [elapsedMs]);
 
   const primaryButtonLabel = isRunning
     ? t("stopwatch.pause")
@@ -111,19 +35,27 @@ const StopWatch = () => {
     (async () => {
       const snapshot = await loadStopwatch();
       if (snapshot) {
-        setElapsedMs(snapshot.elapsedMs ?? 0);
-        setLaps(snapshot.laps ?? []);
-        setIsRunning(false);
+        setSnapshot(snapshot);
       }
     })();
-  }, [user, loadStopwatch]);
+  }, [user, loadStopwatch, setSnapshot]);
 
   useEffect(() => {
     if (!user) return;
     if (isPaused) {
-      saveStopwatch({ elapsedMs, laps });
+      saveStopwatch(snapshot());
     }
-  }, [isPaused, elapsedMs, laps, saveStopwatch, user]);
+  }, [isPaused, snapshot, saveStopwatch, user]);
+
+  const handleLap = () => {
+    const snap = lap();
+    if (user && snap) saveStopwatch(snap);
+  };
+
+  const handleReset = () => {
+    const snap = reset();
+    if (user) saveStopwatch(snap);
+  };
 
   return (
     <div className="relative w-full max-w-2xl space-y-6">
@@ -167,7 +99,7 @@ const StopWatch = () => {
           />
 
           <Button
-            onClickHandle={isPaused ? reset : addLap}
+            onClickHandle={isPaused ? handleReset : handleLap}
             buttonName={secondaryButtonLabel}
             disabled={!isRunning && !isPaused}
             className={`flex-1 rounded-2xl border px-5 py-3 text-lg font-semibold transition-all duration-200 ${
