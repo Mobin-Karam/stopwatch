@@ -2,7 +2,7 @@ const isAbsoluteUrl = (url: string) => /^https?:\/\//i.test(url);
 
 export const apiUrl = (path: string) => {
   if (isAbsoluteUrl(path)) return path;
-  const base = (process.env.NEXT_PUBLIC_API_BASE ?? "").replace(/\/+$/, "");
+  const base = (process.env.NEXT_PUBLIC_API_BASE ?? "https://divtimebackend.liara.run").replace(/\/+$/, "");
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   return `${base}${normalizedPath}`;
 };
