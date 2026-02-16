@@ -1,4 +1,5 @@
 'use client';
+import Link from "next/link";
 import type { PropsWithChildren } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -13,11 +14,12 @@ import { useState } from "react";
 type MobileNavProps = {
   items: NavItem[];
   activePage: PageKey;
-  onSelectPage: (key: PageKey) => void;
   dir: "ltr" | "rtl";
 };
 
-const MobileNav = ({ items, activePage, onSelectPage, dir }: MobileNavProps) => {
+const pathForPage = (page: PageKey) => (page === "stopwatch" ? "/" : `/${page}`);
+
+const MobileNav = ({ items, activePage, dir }: MobileNavProps) => {
   const { t } = useI18n();
 
   return (
@@ -30,11 +32,12 @@ const MobileNav = ({ items, activePage, onSelectPage, dir }: MobileNavProps) => 
       >
         {items.map((item) => {
           const isActive = item.key === activePage;
+          const href = pathForPage(item.key);
           return (
-            <button
+            <Link
               key={item.key}
-              type="button"
-              onClick={() => onSelectPage(item.key)}
+              href={href}
+              prefetch
               className={`min-w-[150px] flex-1 rounded-xl border px-3 py-2 text-left transition ${
                 isActive
                   ? "border-emerald-400/70 bg-emerald-500/10 text-emerald-50"
@@ -58,7 +61,7 @@ const MobileNav = ({ items, activePage, onSelectPage, dir }: MobileNavProps) => 
               <p className="mt-1 text-[12px] leading-snug text-slate-400">
                 {t(`nav.${item.key}.description`)}
               </p>
-            </button>
+            </Link>
           );
         })}
       </div>
@@ -69,7 +72,6 @@ const MobileNav = ({ items, activePage, onSelectPage, dir }: MobileNavProps) => 
 type LayoutProps = PropsWithChildren<{
   navItems: NavItem[];
   activePage: PageKey;
-  onSelectPage: (key: PageKey) => void;
   currentTime: string;
   timeMode: TimeMode;
   onToggleTimeMode: () => void;
@@ -86,7 +88,6 @@ type LayoutProps = PropsWithChildren<{
 export default function Layout({
   navItems,
   activePage,
-  onSelectPage,
   currentTime,
   timeMode,
   onToggleTimeMode,
@@ -109,9 +110,9 @@ export default function Layout({
         <Sidebar
           items={navItems}
           activePage={activePage}
-          onSelectPage={onSelectPage}
           user={user}
           onOpenAccount={onOpenAccount}
+          hrefForPage={pathForPage}
         />
 
         <div className="flex flex-1 flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[0_20px_80px_rgba(0,0,0,0.25)] tv:rounded-[26px]">

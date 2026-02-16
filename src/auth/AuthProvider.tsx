@@ -56,7 +56,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const loginGithub = useCallback(() => {
-    window.location.href = apiUrl("/api/auth/github");
+    if (typeof window === "undefined") return;
+    const redirectUri = encodeURIComponent(`${window.location.origin}/api/auth/github/callback`);
+    const params = new URLSearchParams({
+      redirect_uri: redirectUri,
+      prompt: "select_account",
+    });
+    window.location.href = `${apiUrl("/api/auth/github")}?${params.toString()}`;
   }, []);
 
   const logout = useCallback(async () => {

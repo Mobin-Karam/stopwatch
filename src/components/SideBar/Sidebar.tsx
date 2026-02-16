@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { NavItem, PageKey } from "../../types/navigation";
 import type { User } from "../../auth/types";
 import { useI18n } from "../../i18n/I18nProvider";
@@ -5,9 +6,9 @@ import { useI18n } from "../../i18n/I18nProvider";
 type SidebarProps = {
   items: NavItem[];
   activePage: PageKey;
-  onSelectPage: (key: PageKey) => void;
   user: User | null;
   onOpenAccount: () => void;
+  hrefForPage: (key: PageKey) => string;
 };
 
 const getInitials = (name?: string) => {
@@ -17,7 +18,7 @@ const getInitials = (name?: string) => {
   return (parts[0][0] + parts[1][0]).toUpperCase();
 };
 
-const Sidebar = ({ items, activePage, onSelectPage, user, onOpenAccount }: SidebarProps) => {
+const Sidebar = ({ items, activePage, user, onOpenAccount, hrefForPage }: SidebarProps) => {
   const { t } = useI18n();
 
   return (
@@ -35,10 +36,11 @@ const Sidebar = ({ items, activePage, onSelectPage, user, onOpenAccount }: Sideb
           {items.map((item) => {
             const isActive = item.key === activePage;
             return (
-              <button
+              <Link
                 key={item.key}
-                type="button"
-                onClick={() => onSelectPage(item.key)}
+                href={hrefForPage(item.key)}
+                prefetch
+                aria-current={isActive ? "page" : undefined}
                 className={`group flex w-full items-center justify-between rounded-xl border px-3 py-3 text-left transition ${
                   isActive
                     ? "border-emerald-400 bg-transparent text-emerald-100"
@@ -58,7 +60,7 @@ const Sidebar = ({ items, activePage, onSelectPage, user, onOpenAccount }: Sideb
                 >
                   {item.status === "live" ? t("status.live") : t("status.soon")}
                 </span>
-              </button>
+              </Link>
             );
           })}
         </nav>
