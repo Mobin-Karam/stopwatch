@@ -50,14 +50,14 @@ const DonationOverlay = ({ open, onClose }: DonationOverlayProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto px-4 py-6 sm:items-center sm:px-6">
-      <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" aria-hidden onClick={onClose} />
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" aria-hidden onClick={onClose} />
 
-      <div className="relative w-full max-w-lg max-h-[85vh] space-y-5 overflow-y-auto rounded-3xl border border-indigo-400/40 bg-slate-900/95 p-5 shadow-[0_30px_120px_rgba(0,0,0,0.55)] backdrop-blur-lg sm:p-7 tv:max-w-xl tv:p-9">
-        <div className="absolute -left-12 -top-12 h-32 w-32 rounded-full bg-indigo-500/15 blur-3xl" />
-        <div className="absolute -right-10 bottom-0 h-28 w-28 rounded-full bg-emerald-400/20 blur-3xl" />
+      <div className="relative w-full max-w-lg max-h-[85vh] space-y-5 overflow-y-auto rounded-3xl border border-amber-400/50 bg-zinc-950/95 p-5 shadow-[0_30px_140px_rgba(0,0,0,0.6)] backdrop-blur-lg sm:p-7 tv:max-w-xl tv:p-9">
+        <div className="absolute -left-12 -top-12 h-32 w-32 rounded-full bg-amber-400/18 blur-3xl" />
+        <div className="absolute -right-10 bottom-0 h-28 w-28 rounded-full bg-yellow-500/18 blur-3xl" />
 
         <div className="relative space-y-2 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-indigo-200/80">Donate</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-amber-200/80">Donate</p>
           <h2 className="text-xl font-semibold text-slate-50 sm:text-2xl">حمایت از تایم</h2>
           <p className="text-sm text-slate-300 sm:text-base">
             با هر مبلغی که دوست دارید از توسعه ابزارهای رایگان حمایت کنید.
@@ -68,7 +68,7 @@ const DonationOverlay = ({ open, onClose }: DonationOverlayProps) => {
           <button
             type="button"
             onClick={loginGoogle}
-            className="w-full rounded-2xl border border-emerald-400/60 bg-emerald-500/10 px-4 py-3 text-sm font-semibold text-emerald-50 transition hover:border-emerald-300"
+            className="w-full rounded-2xl border border-amber-400/70 bg-amber-500/10 px-4 py-3 text-sm font-semibold text-amber-100 transition hover:border-amber-300"
           >
             ورود سریع با گوگل برای ثبت رسید
           </button>
@@ -82,7 +82,7 @@ const DonationOverlay = ({ open, onClose }: DonationOverlayProps) => {
             step={1000}
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
-            className="w-full rounded-2xl border border-slate-700 bg-slate-800 px-4 py-3 text-base text-slate-100 outline-none focus:border-indigo-400"
+            className="w-full rounded-2xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-base text-slate-100 outline-none focus:border-amber-400"
             placeholder="مثلا 50000"
           />
           <div className="flex flex-wrap gap-2">
@@ -93,8 +93,8 @@ const DonationOverlay = ({ open, onClose }: DonationOverlayProps) => {
                 onClick={() => setAmount(preset)}
                 className={`rounded-full border px-3 py-1 text-sm transition ${
                   amount === preset
-                    ? "border-indigo-400 bg-indigo-500/15 text-indigo-100"
-                    : "border-slate-700 bg-slate-800 text-slate-200 hover:border-slate-500"
+                    ? "border-amber-400 bg-amber-500/15 text-amber-100"
+                    : "border-zinc-800 bg-zinc-900 text-slate-200 hover:border-zinc-700"
                 }`}
               >
                 {preset.toLocaleString("fa-IR")}
@@ -109,13 +109,13 @@ const DonationOverlay = ({ open, onClose }: DonationOverlayProps) => {
             value={note}
             onChange={(e) => setNote(e.target.value)}
             rows={3}
-            className="w-full rounded-2xl border border-slate-700 bg-slate-800 px-4 py-3 text-sm text-slate-100 outline-none focus:border-indigo-400"
+            className="w-full rounded-2xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-sm text-slate-100 outline-none focus:border-amber-400"
             placeholder="دلیل حمایت یا پیام شما"
           />
         </div>
 
         {message && (
-          <div className="rounded-xl border border-slate-700 bg-slate-800/70 px-4 py-3 text-sm text-slate-200">
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-4 py-3 text-sm text-slate-200">
             {message}
           </div>
         )}
@@ -124,7 +124,7 @@ const DonationOverlay = ({ open, onClose }: DonationOverlayProps) => {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-2xl border border-slate-700 bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-600"
+            className="rounded-2xl border border-zinc-800 bg-zinc-900 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-zinc-700"
           >
             بستن
           </button>
@@ -132,7 +132,7 @@ const DonationOverlay = ({ open, onClose }: DonationOverlayProps) => {
             type="button"
             onClick={handleSubmit}
             disabled={loading}
-            className="rounded-2xl border border-indigo-400/60 bg-indigo-500/15 px-5 py-2 text-sm font-semibold text-indigo-50 shadow-[0_0_18px_rgba(99,102,241,0.25)] transition hover:border-indigo-300 hover:bg-indigo-500/25 disabled:opacity-60"
+            className="rounded-2xl border border-amber-400/70 bg-amber-500/15 px-5 py-2 text-sm font-semibold text-amber-100 shadow-[0_0_18px_rgba(250,204,21,0.3)] transition hover:border-amber-300 hover:bg-amber-500/25 disabled:opacity-60"
           >
             {loading ? "در حال هدایت..." : "پرداخت امن"}
           </button>

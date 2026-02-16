@@ -9,6 +9,7 @@ type SidebarProps = {
   user: User | null;
   onOpenAccount: () => void;
   hrefForPage: (key: PageKey) => string;
+  className?: string;
 };
 
 const getInitials = (name?: string) => {
@@ -18,14 +19,16 @@ const getInitials = (name?: string) => {
   return (parts[0][0] + parts[1][0]).toUpperCase();
 };
 
-const Sidebar = ({ items, activePage, user, onOpenAccount, hrefForPage }: SidebarProps) => {
+const Sidebar = ({ items, activePage, user, onOpenAccount, hrefForPage, className }: SidebarProps) => {
   const { t } = useI18n();
 
   return (
-    <aside className="hidden w-full flex-shrink-0 flex-col justify-between gap-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 text-slate-200 md:flex md:w-64 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:w-72 lg:overflow-y-auto tv:w-80">
+    <aside
+      className={`hidden w-full flex-shrink-0 flex-col justify-between gap-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 text-slate-200 md:flex md:w-64 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:w-72 lg:overflow-y-auto tv:w-80 ${className ?? ""}`}
+    >
       <div className="space-y-5">
         <div className="rounded-xl border border-[var(--border)] bg-transparent p-4">
-          <p className="text-xs uppercase tracking-[0.25em] text-emerald-200/80">
+          <p className="text-xs uppercase tracking-[0.25em] text-amber-200/80">
             {t("sidebar.tag")}
           </p>
           <h2 className="mt-2 text-xl font-semibold">{t("sidebar.title")}</h2>
@@ -43,7 +46,7 @@ const Sidebar = ({ items, activePage, user, onOpenAccount, hrefForPage }: Sideba
                 aria-current={isActive ? "page" : undefined}
                 className={`group flex w-full items-center justify-between rounded-xl border px-3 py-3 text-left transition ${
                   isActive
-                    ? "border-emerald-400 bg-transparent text-emerald-100"
+                    ? "border-amber-400 bg-transparent text-amber-100"
                     : "border-[var(--border)] bg-transparent text-slate-200 hover:border-slate-500"
                 }`}
               >
@@ -54,7 +57,7 @@ const Sidebar = ({ items, activePage, user, onOpenAccount, hrefForPage }: Sideba
                 <span
                   className={`text-[10px] uppercase tracking-[0.2em] ${
                     item.status === "live"
-                      ? "text-emerald-300"
+                      ? "text-amber-300"
                       : "text-slate-500 group-hover:text-slate-300"
                   }`}
                 >

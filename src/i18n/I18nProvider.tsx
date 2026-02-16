@@ -18,11 +18,11 @@ type I18nContextValue = {
 const I18nContext = createContext<I18nContextValue | null>(null);
 
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
-  const [lang, setLang] = useState<Lang | null>(null);
+  const [lang, setLang] = useState<Lang>("fa");
   const [messages, setMessages] = useState<Messages | null>(null);
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
-  const [hasSelection, setHasSelection] = useState<boolean>(false);
+  const [hasSelection, setHasSelection] = useState<boolean>(true);
 
   // Hydrate language preference on client to keep SSR/CSR markup aligned.
   useEffect(() => {
@@ -60,27 +60,32 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const dir = lang === "fa" ? "rtl" : "ltr";
-    document.documentElement.dir = dir;
-    document.documentElement.lang = lang ?? "en";
+    if (typeof document !== "undefined") {
+      document.documentElement.dir = dir;
+      document.documentElement.lang = lang ?? "en";
+    }
   }, [lang]);
 
   const t = useTranslationBuilder(messages);
 
   const setLanguage = async (next: Lang) => {
     setLang(next);
+    setHasSelection(true);
   };
+
+  const resolvedDir: "ltr" | "rtl" = lang === "fa" ? "rtl" : "ltr";
 
   const value = useMemo<I18nContextValue>(
     () => ({
       lang,
-      dir: "ltr",
+      dir: resolvedDir,
       t,
       setLanguage,
       loading,
       ready: ready && Boolean(messages),
       hasSelection,
     }),
-    [lang, loading, ready, hasSelection, t, messages],
+    [lang, loading, ready, hasSelection, t, messages, resolvedDir],
   );
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

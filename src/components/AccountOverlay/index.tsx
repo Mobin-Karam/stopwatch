@@ -37,14 +37,14 @@ const AccountOverlay = ({ open, onClose }: AccountOverlayProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto px-4 py-6 sm:items-center sm:px-6">
       <div
-        className="absolute inset-0 bg-slate-950/75 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
         aria-hidden
         onClick={onClose}
       />
 
-      <div className="relative w-full max-w-xl max-h-[90vh] space-y-5 overflow-y-auto rounded-3xl border border-slate-700 bg-slate-900/95 p-5 shadow-[0_30px_120px_rgba(0,0,0,0.6)] backdrop-blur-lg sm:p-7 tv:max-w-2xl tv:p-9">
-        <div className="absolute -left-14 -top-14 h-32 w-32 rounded-full bg-indigo-500/15 blur-3xl" />
-        <div className="absolute -right-10 bottom-0 h-28 w-28 rounded-full bg-emerald-400/15 blur-3xl" />
+      <div className="relative w-full max-w-xl max-h-[90vh] space-y-5 overflow-y-auto rounded-3xl border border-zinc-800 bg-zinc-950/95 p-5 shadow-[0_30px_140px_rgba(0,0,0,0.6)] backdrop-blur-lg sm:p-7 tv:max-w-2xl tv:p-9">
+        <div className="absolute -left-14 -top-14 h-32 w-32 rounded-full bg-amber-400/15 blur-3xl" />
+        <div className="absolute -right-10 bottom-0 h-28 w-28 rounded-full bg-yellow-500/15 blur-3xl" />
 
         {!user ? (
           <div className="relative space-y-4 text-center">
@@ -55,14 +55,14 @@ const AccountOverlay = ({ open, onClose }: AccountOverlayProps) => {
               <button
                 type="button"
                 onClick={loginGoogle}
-                className="rounded-2xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-emerald-400 hover:bg-slate-800"
+                className="rounded-2xl border border-zinc-800 bg-zinc-900/80 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-amber-400 hover:bg-zinc-800"
               >
                 Continue with Google
               </button>
               <button
                 type="button"
                 onClick={loginGithub}
-                className="rounded-2xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-emerald-400 hover:bg-slate-800"
+                className="rounded-2xl border border-zinc-800 bg-zinc-900/80 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-amber-400 hover:bg-zinc-800"
               >
                 Continue with GitHub
               </button>
@@ -79,7 +79,7 @@ const AccountOverlay = ({ open, onClose }: AccountOverlayProps) => {
               <button
                 type="button"
                 onClick={logout}
-                className="rounded-full border border-slate-700 bg-slate-800 px-3 py-2 text-xs font-semibold text-slate-200 transition hover:border-rose-400 hover:text-rose-200"
+                className="rounded-full border border-zinc-800 bg-zinc-900 px-3 py-2 text-xs font-semibold text-slate-200 transition hover:border-amber-300 hover:text-amber-100"
               >
                 Logout
               </button>
@@ -90,7 +90,7 @@ const AccountOverlay = ({ open, onClose }: AccountOverlayProps) => {
               <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-2xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 outline-none focus:border-emerald-400"
+                className="w-full rounded-2xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-slate-100 outline-none focus:border-amber-400"
                 placeholder="Your name"
               />
             </div>
@@ -105,8 +105,8 @@ const AccountOverlay = ({ open, onClose }: AccountOverlayProps) => {
                     onClick={() => setTheme(mode as "dark" | "light")}
                     className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition ${
                       theme === mode
-                        ? "border-emerald-400 bg-emerald-500/10 text-emerald-100"
-                        : "border-slate-700 bg-slate-800 text-slate-200 hover:border-slate-600"
+                        ? "border-amber-400 bg-amber-500/10 text-amber-100"
+                        : "border-zinc-800 bg-zinc-900 text-slate-200 hover:border-zinc-700"
                     }`}
                   >
                     {mode.toUpperCase()}
@@ -119,14 +119,14 @@ const AccountOverlay = ({ open, onClose }: AccountOverlayProps) => {
               <button
                 type="button"
                 onClick={loginGoogle}
-                className="rounded-2xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-indigo-400 hover:bg-slate-800"
+                className="rounded-2xl border border-zinc-800 bg-zinc-900/80 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-amber-400 hover:bg-zinc-800"
               >
                 Switch Google account
               </button>
               <button
                 type="button"
                 onClick={loginGithub}
-                className="rounded-2xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-indigo-400 hover:bg-slate-800"
+                className="rounded-2xl border border-zinc-800 bg-zinc-900/80 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-amber-400 hover:bg-zinc-800"
               >
                 Switch GitHub account
               </button>
@@ -136,7 +136,7 @@ const AccountOverlay = ({ open, onClose }: AccountOverlayProps) => {
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-2xl border border-slate-700 bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-600"
+                className="rounded-2xl border border-zinc-800 bg-zinc-900 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-zinc-700"
               >
                 Close
               </button>
@@ -144,13 +144,13 @@ const AccountOverlay = ({ open, onClose }: AccountOverlayProps) => {
                 type="button"
                 onClick={handleSave}
                 disabled={saving}
-                className="rounded-2xl border border-emerald-400/60 bg-emerald-500/15 px-4 py-2 text-sm font-semibold text-emerald-50 shadow-[0_0_18px_rgba(16,185,129,0.25)] transition hover:border-emerald-300 hover:bg-emerald-500/25 disabled:opacity-60"
+                className="rounded-2xl border border-amber-400/70 bg-amber-500/15 px-4 py-2 text-sm font-semibold text-amber-100 shadow-[0_0_18px_rgba(250,204,21,0.25)] transition hover:border-amber-300 hover:bg-amber-500/25 disabled:opacity-60"
               >
                 {saving ? "Saving..." : "Save changes"}
               </button>
             </div>
 
-            <div className="space-y-3 rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+            <div className="space-y-3 rounded-2xl border border-zinc-800 bg-zinc-900/70 p-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
                   <p className="text-xs uppercase tracking-[0.25em] text-slate-500">Subscription</p>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Layout from "../Layout/main";
 import StopWatch from "../components/StopWatch";
 import ComingSoon from "../components/ComingSoon";
@@ -23,10 +23,10 @@ const pageFromPathname = (pathname: string): PageKey | null => {
 
 export default function ClientHome({ initialPage }: { initialPage: PageKey }) {
   const pathname = usePathname() || "/";
-  const router = useRouter();
   const { formatted: currentTime, mode: timeMode, toggleMode } = useClock({ initialMode: "24" });
   const [focusOpen, setFocusOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
+  const [languageOpen, setLanguageOpen] = useState(false);
   const { ready, hasSelection, dir } = useI18n();
   const { user, theme, setTheme } = useAuth();
 
@@ -51,6 +51,7 @@ export default function ClientHome({ initialPage }: { initialPage: PageKey }) {
         onToggleTimeMode={toggleMode}
         currentTime={currentTime}
         onOpenFocus={() => setFocusOpen(true)}
+        onOpenLanguage={() => setLanguageOpen(true)}
         pageMeta={NAV_ITEMS.find((item) => item.key === activePage) ?? NAV_ITEMS[0]}
         user={user}
         onLoginRequest={() => setAccountOpen(true)}
@@ -63,7 +64,10 @@ export default function ClientHome({ initialPage }: { initialPage: PageKey }) {
       </Layout>
 
       <FocusOverlay open={focusOpen} onClose={() => setFocusOpen(false)} />
-      <LanguageOverlay open={!hasSelection || !ready} />
+      <LanguageOverlay
+        open={languageOpen || (!hasSelection && !ready)}
+        onClose={() => setLanguageOpen(false)}
+      />
       <AccountOverlay open={accountOpen} onClose={() => setAccountOpen(false)} />
     </>
   );

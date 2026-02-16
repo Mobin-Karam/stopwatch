@@ -40,7 +40,7 @@ const MobileNav = ({ items, activePage, dir }: MobileNavProps) => {
               prefetch
               className={`min-w-[150px] flex-1 rounded-xl border px-3 py-2 text-left transition ${
                 isActive
-                  ? "border-emerald-400/70 bg-emerald-500/10 text-emerald-50"
+                  ? "border-amber-400/70 bg-amber-500/10 text-amber-100"
                   : "border-[var(--border)] bg-transparent text-slate-200 hover:border-slate-500"
               }`}
             >
@@ -51,7 +51,7 @@ const MobileNav = ({ items, activePage, dir }: MobileNavProps) => {
                 <span
                   className={`text-[10px] uppercase tracking-[0.2em] ${
                     item.status === "live"
-                      ? "text-emerald-300"
+                      ? "text-amber-300"
                       : "text-slate-500"
                   }`}
                 >
@@ -76,6 +76,7 @@ type LayoutProps = PropsWithChildren<{
   timeMode: TimeMode;
   onToggleTimeMode: () => void;
   onOpenFocus: () => void;
+  onOpenLanguage: () => void;
   pageMeta: NavItem;
   user: User | null;
   onLoginRequest: () => void;
@@ -92,6 +93,7 @@ export default function Layout({
   timeMode,
   onToggleTimeMode,
   onOpenFocus,
+  onOpenLanguage,
   pageMeta,
   user,
   onLoginRequest,
@@ -102,10 +104,12 @@ export default function Layout({
   children,
 }: LayoutProps) {
   const [donationOpen, setDonationOpen] = useState(false);
+  const sidebarOrder = dir === "rtl" ? "lg:order-2" : "lg:order-1";
+  const contentOrder = dir === "rtl" ? "lg:order-1" : "lg:order-2";
   return (
     <div className="min-h-screen bg-[var(--bg)] text-slate-100" dir={dir}>
       <div
-        className={`mx-auto flex min-h-screen max-w-6xl flex-col gap-4 px-3 py-4 sm:px-4 sm:py-6 lg:max-w-6xl lg:flex-row lg:gap-5 lg:px-6 xl:max-w-7xl 2xl:max-w-8xl tv:max-w-[110rem] ${dir === "rtl" ? "lg:flex-row-reverse" : ""}`}
+        className="flex min-h-screen max-w-6xl flex-col gap-4 px-3 py-4 sm:px-4 sm:py-6 lg:max-w-6xl lg:flex-row lg:gap-5 lg:px-6 xl:max-w-7xl 2xl:max-w-8xl tv:max-w-[110rem]"
       >
         <Sidebar
           items={navItems}
@@ -113,27 +117,30 @@ export default function Layout({
           user={user}
           onOpenAccount={onOpenAccount}
           hrefForPage={pathForPage}
+          className={sidebarOrder}
         />
 
-        <div className="flex flex-1 flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[0_20px_80px_rgba(0,0,0,0.25)] tv:rounded-[26px]">
+        <div
+          className={`flex flex-1 flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[0_20px_80px_rgba(0,0,0,0.25)] tv:rounded-[26px] ${contentOrder}`}
+        >
           <Header
             currentTime={currentTime}
             timeMode={timeMode}
             onToggleTimeMode={onToggleTimeMode}
-          onOpenFocus={onOpenFocus}
-          pageMeta={pageMeta}
-          user={user}
-          onLoginRequest={onLoginRequest}
-          onOpenAccount={onOpenAccount}
-          onOpenDonation={() => setDonationOpen(true)}
-          theme={theme}
-          onToggleTheme={onToggleTheme}
-        />
+            onOpenFocus={onOpenFocus}
+            onOpenLanguage={onOpenLanguage}
+            pageMeta={pageMeta}
+            user={user}
+            onLoginRequest={onLoginRequest}
+            onOpenAccount={onOpenAccount}
+            onOpenDonation={() => setDonationOpen(true)}
+            theme={theme}
+            onToggleTheme={onToggleTheme}
+          />
 
           <MobileNav
             items={navItems}
             activePage={activePage}
-            onSelectPage={onSelectPage}
             dir={dir}
           />
 

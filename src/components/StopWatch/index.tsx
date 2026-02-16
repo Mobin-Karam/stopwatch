@@ -68,19 +68,19 @@ const StopWatch = () => {
         </div>
 
         <div className="mt-4 flex items-end justify-center gap-2 font-mono text-5xl sm:text-6xl lg:text-7xl tv:gap-4 tv:text-8xl">
-          <span className={isRunning ? "text-blue-200" : "text-slate-100"}>
+          <span className={isRunning ? "text-amber-200" : "text-slate-100"}>
             {time.hours}
           </span>
           <span className="text-slate-500">:</span>
-          <span className={isRunning || isPaused ? "text-blue-200" : "text-slate-100"}>
+          <span className={isRunning || isPaused ? "text-amber-200" : "text-slate-100"}>
             {time.minutes}
           </span>
           <span className="text-slate-500">:</span>
-          <span className={isRunning || isPaused ? "text-blue-200" : "text-slate-100"}>
+          <span className={isRunning || isPaused ? "text-amber-200" : "text-slate-100"}>
             {time.seconds}
           </span>
           <span className="text-slate-500">.</span>
-          <span className={isRunning || isPaused ? "text-blue-200" : "text-slate-100"}>
+          <span className={isRunning || isPaused ? "text-amber-200" : "text-slate-100"}>
             {time.centiseconds}
           </span>
         </div>
@@ -96,7 +96,7 @@ const StopWatch = () => {
             className={`flex-1 rounded-2xl border px-5 py-3 text-base font-semibold transition-all duration-200 sm:text-lg tv:px-6 tv:py-4 tv:text-xl ${
               isRunning
                 ? "border-amber-500/60 bg-transparent text-amber-100 hover:border-amber-400"
-                : "border-blue-500/60 bg-transparent text-blue-100 hover:border-blue-400"
+                : "border-amber-400/70 bg-transparent text-amber-100 hover:border-amber-300"
             }`}
           />
 

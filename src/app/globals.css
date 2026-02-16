@@ -5,17 +5,17 @@
 :root {
   font-family: "Vazirmatn", system-ui, -apple-system, sans-serif;
   color-scheme: dark;
-  --bg: #050812;
-  --bg-accent: radial-gradient(circle at 20% 20%, rgba(93, 227, 181, 0.12), transparent 38%),
-    radial-gradient(circle at 80% 0%, rgba(90, 153, 255, 0.16), transparent 32%), #050812;
-  --surface: #0b1324;
-  --surface-strong: #111c34;
-  --border: #1b294a;
-  --text: #e7f2ff;
-  --muted: #9fb6d3;
-  --accent: #5de3b5;
-  --accent-strong: #7fd6ff;
-  --shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+  --bg: #050505;
+  --bg-accent: radial-gradient(circle at 18% 18%, rgba(250, 204, 21, 0.08), transparent 38%),
+    radial-gradient(circle at 82% 0%, rgba(234, 179, 8, 0.06), transparent 32%), #050505;
+  --surface: #0d0d11;
+  --surface-strong: #12121a;
+  --border: #1f1f2a;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #facc15;
+  --accent-strong: #f59e0b;
+  --shadow: 0 30px 120px rgba(0, 0, 0, 0.55);
 }
 
 @font-face {
@@ -28,16 +28,16 @@
 
 [data-theme="light"] {
   color-scheme: light;
-  --bg: #f5f7fb;
-  --bg-accent: radial-gradient(circle at 15% 15%, rgba(93, 227, 181, 0.2), transparent 35%),
-    radial-gradient(circle at 90% 10%, rgba(90, 153, 255, 0.18), transparent 30%), #f5f7fb;
+  --bg: #f7f7fa;
+  --bg-accent: radial-gradient(circle at 15% 15%, rgba(250, 204, 21, 0.12), transparent 35%),
+    radial-gradient(circle at 90% 10%, rgba(234, 179, 8, 0.08), transparent 30%), #f7f7fa;
   --surface: #ffffff;
-  --surface-strong: #f0f3fb;
-  --border: #d6deed;
+  --surface-strong: #f3f4f6;
+  --border: #dcdde3;
   --text: #0f172a;
-  --muted: #475569;
-  --accent: #1f9d73;
-  --accent-strong: #1e6ad9;
+  --muted: #4b5563;
+  --accent: #ca8a04;
+  --accent-strong: #a16207;
   --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
 
@@ -61,8 +61,8 @@ a {
 }
 
 ::selection {
-  background: rgba(93, 227, 181, 0.28);
-  color: #041023;
+  background: rgba(250, 204, 21, 0.25);
+  color: #0b0b0f;
 }
 
 /* Light theme overrides for slate utility colors to keep contrast */

@@ -11,11 +11,11 @@ const FocusOverlay = ({ open, onClose }: FocusOverlayProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto px-4 py-6 sm:items-center sm:px-6">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} aria-hidden />
+      <div className="absolute inset-0 bg-black/65" onClick={onClose} aria-hidden />
 
       <div className="relative w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-8 tv:p-10">
         <div className="relative space-y-4 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-indigo-200/80">
+          <p className="text-xs uppercase tracking-[0.3em] text-amber-200/80">
             {t("header.focus")}
           </p>
           <h2 className="text-xl font-semibold text-slate-50 sm:text-2xl">{t("focus.title")}</h2>
@@ -33,7 +33,7 @@ const FocusOverlay = ({ open, onClose }: FocusOverlayProps) => {
               href="https://forms.gle/WY5Zfeedback"
               target="_blank"
               rel="noreferrer"
-              className="rounded-2xl border border-indigo-400/60 bg-transparent px-4 py-2 text-sm font-semibold text-indigo-50 transition hover:border-indigo-300"
+              className="rounded-2xl border border-amber-400/70 bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:border-amber-300"
             >
               {t("focus.feedback")}
             </a>

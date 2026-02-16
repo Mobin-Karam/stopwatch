@@ -2,7 +2,7 @@ name: CD-Liara
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: Liara
-      url: https://mobinkaram.liara.run
+      url: https://divtime.liara.run
     concurrency:
       group: liara-deploy
       cancel-in-progress: true
