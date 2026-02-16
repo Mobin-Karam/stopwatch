@@ -1,11 +1,16 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
 import App from './App.tsx'
+import { I18nProvider } from './i18n/I18nProvider.tsx'
+import { AuthProvider } from './auth/AuthProvider.tsx'
 
-const root = document.getElementById('root')!
-ReactDOM.createRoot(root).render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <AuthProvider>
+      <I18nProvider>
+        <App />
+      </I18nProvider>
+    </AuthProvider>
+  </StrictMode>,
 )

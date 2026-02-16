@@ -1,22 +1,26 @@
-/* eslint-disable no-tabs */
-interface buttonProps {
-  buttonName: string
-  className: string
-  onClickHandle: () => void
-  disabled: boolean
+interface ButtonProps {
+  buttonName: string;
+  className: string;
+  onClickHandle: () => void;
+  disabled?: boolean;
 }
 
 const Button = ({
   buttonName,
   className,
   onClickHandle,
-  disabled = false
-}: buttonProps): JSX.Element => {
+  disabled = false,
+}: ButtonProps) => {
   return (
-    <button onClick={onClickHandle} className={className} disabled={disabled}>
+    <button
+      type="button"
+      onClick={onClickHandle}
+      className={className}
+      disabled={disabled}
+    >
       {buttonName}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

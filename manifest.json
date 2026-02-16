@@ -1,6 +1,6 @@
 {
-  "short_name": "Stop Watch",
-  "name": "Stop Watch",
+  "short_name": "Time",
+  "name": "Time",
   "icons": [
     {
       "src": "./src/assets/images/favicon-32x32.png",
