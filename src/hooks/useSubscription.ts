@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { plans as fallbackPlans, type Plan } from "../subscriptions/plans";
+import { apiUrl } from "../utils/http";
 
 type Subscription = {
   planId: string;
@@ -25,7 +26,7 @@ export const useSubscription = (): UseSubscriptionReturn => {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/subscriptions/plans", { credentials: "include" });
+      const res = await fetch(apiUrl("/api/subscriptions/plans"), { credentials: "include" });
       const data = await res.json();
       setActive(data.active ?? null);
       if (Array.isArray(data.plans)) {
@@ -47,7 +48,7 @@ export const useSubscription = (): UseSubscriptionReturn => {
   const start = useCallback(async (planId: Plan["id"]) => {
     setLoading(true);
     try {
-      const res = await fetch("/api/subscriptions/request", {
+      const res = await fetch(apiUrl("/api/subscriptions/request"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

@@ -1,3 +1,4 @@
+import { apiUrl } from "../utils/http";
 import type { Lang, Messages } from "./types";
 
 const BUNDLES: Record<Lang, Messages> = {
@@ -146,7 +147,7 @@ const BUNDLES: Record<Lang, Messages> = {
 const postSelection = async (lang: Lang) => {
   if (typeof fetch !== "function") return;
   try {
-    await fetch("/api/user/locale", {
+    await fetch(apiUrl("/api/user/locale"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

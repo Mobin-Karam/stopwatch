@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { StopwatchSnapshot, User } from "./types";
-import { withCredentialsFetch } from "../utils/http";
+import { apiUrl, withCredentialsFetch } from "../utils/http";
 
 type AuthContextValue = {
   user: User | null;
@@ -52,11 +52,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [user, theme]);
 
   const loginGoogle = useCallback(() => {
-    window.location.href = "/api/auth/google";
+    window.location.href = apiUrl("/api/auth/google");
   }, []);
 
   const loginGithub = useCallback(() => {
-    window.location.href = "/api/auth/github";
+    window.location.href = apiUrl("/api/auth/github");
   }, []);
 
   const logout = useCallback(async () => {
