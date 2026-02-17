@@ -1,6 +1,19 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+'use client';
+
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  type ReactNode,
+} from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useAtom } from "jotai";
+import { authService } from "@/services/auth";
 import type { StopwatchSnapshot, User } from "./types";
-import { apiUrl, withCredentialsFetch } from "../utils/http";
+import { themeAtom } from "@/store/uiAtom";
+import { userAtom } from "@/store/userAtom";
 
 type AuthContextValue = {
   user: User | null;
@@ -8,7 +21,7 @@ type AuthContextValue = {
   loginGoogle: () => void;
   loginGithub: () => void;
   logout: () => Promise<void>;
-  updateProfile: (payload: Partial<Pick<User, "name" | "theme">>) => Promise<void>;
+  updateProfile: (payload: Partial<Pick<User, "name" | "theme" | "avatarColor">>) => Promise<User>;
   saveStopwatch: (snapshot: StopwatchSnapshot) => Promise<void>;
   loadStopwatch: () => Promise<StopwatchSnapshot | null>;
   theme: "dark" | "light";
@@ -18,9 +31,9 @@ type AuthContextValue = {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [theme, setThemeState] = useState<"dark" | "light">("dark");
+  const queryClient = useQueryClient();
+  const [theme, setThemeState] = useAtom(themeAtom);
+  const [, setUserAtom] = useAtom(userAtom);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -28,112 +41,79 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (stored === "dark" || stored === "light") {
       setThemeState(stored);
     }
-  }, []);
+  }, [setThemeState]);
+
+  const meQuery = useQuery<User | null>({
+    queryKey: ["auth", "me"],
+    queryFn: authService.me,
+    retry: 1,
+    staleTime: 60_000,
+  });
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        const res = await withCredentialsFetch("/api/user/me");
-        const data = await res.json();
-        setUser(data.user ?? null);
-      } catch {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
-  }, []);
+    setUserAtom(meQuery.data ?? null);
+  }, [meQuery.data, setUserAtom]);
 
   useEffect(() => {
-    const nextTheme = user?.theme ?? theme;
-    document.documentElement.dataset.theme = nextTheme;
-    localStorage.setItem("theme", nextTheme);
-  }, [user, theme]);
+    const nextTheme = (meQuery.data?.theme ?? theme) as "dark" | "light";
+    if (typeof window !== "undefined") {
+      document.documentElement.dataset.theme = nextTheme;
+      localStorage.setItem("theme", nextTheme);
+    }
+  }, [meQuery.data?.theme, theme]);
 
-  const loginGoogle = useCallback(() => {
-    window.location.href = apiUrl("/api/auth/google");
-  }, []);
-
-  const loginGithub = useCallback(() => {
-    if (typeof window === "undefined") return;
-    const redirectUri = encodeURIComponent(`${window.location.origin}/api/auth/github/callback`);
-    const params = new URLSearchParams({
-      redirect_uri: redirectUri,
-      prompt: "select_account",
-    });
-    window.location.href = `${apiUrl("/api/auth/github")}?${params.toString()}`;
-  }, []);
-
-  const logout = useCallback(async () => {
-    await withCredentialsFetch("/api/auth/logout", { method: "GET" });
-    setUser(null);
-  }, []);
-
-  const updateProfile = useCallback(
-    async (payload: Partial<Pick<User, "name" | "theme">>) => {
-      const res = await withCredentialsFetch("/api/user/preferences", {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json();
-      setUser(data.user);
+  const logoutMutation = useMutation({
+    mutationFn: authService.logout,
+    onSuccess: () => {
+      queryClient.setQueryData(["auth", "me"], null);
+      setUserAtom(null);
     },
-    [],
-  );
+  });
+
+  const updateProfileMutation = useMutation({
+    mutationFn: authService.updateProfile,
+    onSuccess: (updated) => {
+      queryClient.setQueryData(["auth", "me"], updated);
+      setUserAtom(updated);
+    },
+  });
 
   const setTheme = useCallback(
     async (next: "dark" | "light") => {
-      if (user) {
-        await updateProfile({ theme: next });
+      if (meQuery.data) {
+        await updateProfileMutation.mutateAsync({ theme: next });
       } else {
         setThemeState(next);
-        localStorage.setItem("theme", next);
-        document.documentElement.dataset.theme = next;
+        if (typeof window !== "undefined") {
+          localStorage.setItem("theme", next);
+          document.documentElement.dataset.theme = next;
+        }
       }
     },
-    [updateProfile, user],
+    [meQuery.data, setThemeState, updateProfileMutation],
   );
-
-  const saveStopwatch = useCallback(async (snapshot: StopwatchSnapshot) => {
-    if (!user) return;
-    await withCredentialsFetch("/api/user/stopwatch", {
-      method: "POST",
-      body: JSON.stringify(snapshot),
-    });
-  }, [user]);
-
-  const loadStopwatch = useCallback(async () => {
-    if (!user) return null;
-    const res = await withCredentialsFetch("/api/user/stopwatch");
-    const data = await res.json();
-    return data.lastStopwatch ?? null;
-  }, [user]);
 
   const value = useMemo(
     () => ({
-      user,
-      loading,
-      loginGoogle,
-      loginGithub,
-      logout,
-      updateProfile,
-      saveStopwatch,
-      loadStopwatch,
-      theme: user?.theme ?? theme,
+      user: meQuery.data ?? null,
+      loading: meQuery.isLoading || logoutMutation.isPending,
+      loginGoogle: () => authService.redirectToProvider("google"),
+      loginGithub: () => authService.redirectToProvider("github"),
+      logout: () => logoutMutation.mutateAsync(),
+      updateProfile: (payload: Partial<Pick<User, "name" | "theme" | "avatarColor">>) =>
+        updateProfileMutation.mutateAsync(payload),
+      saveStopwatch: authService.saveStopwatch,
+      loadStopwatch: authService.loadStopwatch,
+      theme: (meQuery.data?.theme ?? theme) as "dark" | "light",
       setTheme,
     }),
     [
-      user,
-      loading,
-      loginGoogle,
-      loginGithub,
-      logout,
-      updateProfile,
-      saveStopwatch,
-      loadStopwatch,
+      logoutMutation,
+      meQuery.data,
+      meQuery.isLoading,
       theme,
       setTheme,
+      updateProfileMutation,
     ],
   );
 

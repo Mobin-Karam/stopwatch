@@ -145,6 +145,7 @@ const BUNDLES: Record<Lang, Messages> = {
 };
 
 const postSelection = async (lang: Lang) => {
+  if (process.env.NEXT_PUBLIC_USE_MOCKS === "true") return;
   if (typeof fetch !== "function") return;
   try {
     await fetch(apiUrl("/api/user/locale"), {

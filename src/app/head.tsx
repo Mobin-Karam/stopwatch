@@ -1,14 +1,14 @@
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "تایم",
+  name: "DivTime",
   url: "https://divtime.ir/",
   potentialAction: {
     "@type": "SearchAction",
     target: "https://divtime.ir/?q={search_term_string}",
     "query-input": "required name=search_term_string",
   },
-  inLanguage: "fa-IR",
+  inLanguage: "en-US",
 };
 
 export default function Head() {

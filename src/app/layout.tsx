@@ -5,41 +5,29 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://divtime.ir"),
-  applicationName: "DivTime",
+  applicationName: "دایو تایم",
   manifest: "/manifest.webmanifest",
   title: {
-    default: "تایم | مدیریت زمان فارسی برای توسعه‌دهنده‌ها",
-    template: "%s · تایم",
+    default: "دایو تایم | مدیریت زمان برای توسعه‌دهنده‌ها",
+    template: "%s · دایو تایم",
   },
   description:
-    "تایم یک ابزار فارسی سبک برای کرنومتر، تایمر و پومودورو با همگام‌سازی حساب کاربری و ذخیره تنظیمات.",
-  keywords: [
-    "کرنومتر",
-    "تایمر",
-    "پومودورو",
-    "برنامه روزانه",
-    "مدیریت زمان",
-    "توسعه‌دهنده",
-    "برنامه‌نویس",
-    "بهره‌وری",
-    "فارسی",
-  ],
-  alternates: {
-    canonical: "https://divtime.ir",
-  },
+    "دایو تایم کرنومتر، تایمر، پومودورو، برنامه‌ریز، چت و اتاق صوتی را یکجا ارائه می‌کند. ورود با OAuth، سشن کوکی و استریم زنده پشتیبانی می‌شود.",
+  keywords: ["کرنومتر", "تایمر", "پومودورو", "برنامه‌ریز", "مدیریت زمان", "بهره‌وری"],
+  alternates: { canonical: "https://divtime.ir" },
   openGraph: {
     type: "website",
-    title: "تایم | ابزار زمان برای توسعه‌دهنده‌ها",
+    title: "دایو تایم | ابزار زمان برای توسعه‌دهنده‌ها",
     description:
-      "کرنومتر و تایمر فارسی با دقت بالا، مناسب توسعه‌دهندگان و افراد حرفه‌ای؛ تنظیمات در حساب شما ذخیره می‌شود.",
+      "ردیابی زمان، پومودورو، برنامه‌ریزی وظایف و همکاری تیمی در یک رابط فارسی.",
     url: "https://divtime.ir",
     locale: "fa_IR",
-    siteName: "تایم",
+    siteName: "دایو تایم",
   },
   twitter: {
     card: "summary_large_image",
-    title: "تایم | زمان در دست توسعه‌دهنده",
-    description: "ابزار فارسی برای مدیریت زمان و پومودورو؛ کرنومتر دقیق و ذخیره تنظیمات روی حساب.",
+    title: "دایو تایم | مدیریت زمان",
+    description: "کرنومتر، تایمر، پومودورو، برنامه‌ریز، چت و صوت برای تیم‌ها.",
   },
   icons: {
     icon: [
@@ -50,13 +38,8 @@ export const metadata: Metadata = {
     apple: [{ url: "/icons/divtime-180.png", sizes: "180x180" }],
     shortcut: [{ url: "/icons/divtime-128.png", sizes: "128x128", type: "image/png" }],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  other: {
-    enamad: "65366516",
-  },
+  robots: { index: true, follow: true },
+  other: { enamad: "65366516" },
 };
 
 export const viewport: Viewport = {
