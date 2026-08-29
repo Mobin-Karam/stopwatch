@@ -1,0 +1,40 @@
+time-backend/node_modules
+divtime/node_modules
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# Runtime / cache
+tmp/
+temp/
+*.tsbuildinfo
+*.pid
+*.pid.lock
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Editors/OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Packages / archives
+*.tgz
+*.zip

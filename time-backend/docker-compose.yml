@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  api:
+    build: .
+    container_name: time-backend
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      MONGO_URI: mongodb://mongo:27017/time
+      SESSION_SECRET: change-me
+      FRONTEND_ORIGIN: http://localhost:5173
+      APP_BASE_URL: http://localhost:3000
+      GOOGLE_CLIENT_ID: google-id
+      GOOGLE_CLIENT_SECRET: google-secret
+      GITHUB_CLIENT_ID: github-id
+      GITHUB_CLIENT_SECRET: github-secret
+      ZARINPAL_MERCHANT_ID: zarinpal-merchant-id
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

@@ -1,0 +1,15 @@
+{
+  "app": "divtime",
+  "platform": "next",
+  "node_version": "20",
+  "build": {
+    "location": "iran"
+  },
+  "routes": [
+    {
+      "path": "/api/*",
+      "destination": "https://divtimebackend.liara.run/api/*",
+      "method": "ANY"
+    }
+  ]
+}
