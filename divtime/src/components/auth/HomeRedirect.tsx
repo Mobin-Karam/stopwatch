@@ -44,6 +44,20 @@ export default function HomeRedirect() {
           ورود با گوگل یا گیت‌هاب
         </Link>
       </div>
+      <a
+        href="https://coffeebede.com/mobinkaram"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-4 block w-full max-w-[468px]"
+      >
+        <img
+          src="https://coffeebede.com/banner.svg?u=mobinkaram&bg=1a120b&fg=f5ebdd&sub=c8b49a&mbg=c8763e&mfg=1a120b&cbg=f5ebdd&bd=f5ebdd"
+          width={468}
+          height={100}
+          alt="برام یه قهوه بخر"
+          className="h-auto w-full"
+        />
+      </a>
     </div>
   );
 }
